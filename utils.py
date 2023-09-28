@@ -68,14 +68,14 @@ def create_embeddings(df, embeddings):
 def push_to_pinecone(env,index,embeddings,chunks_data):
 
     pinecone.init(
-    api_key='c7908252-9558-4cb3-8efb-e44f4121c89a',
+    api_key='',
     environment="gcp-starter"
     )
     Pinecone.from_documents(documents= chunks_data,embedding=embeddings,index_name=index)
 
 def pull_from_pinecone(env,index,embeddings):
     pinecone.init(
-    api_key='c7908252-9558-4cb3-8efb-e44f4121c89a',
+    api_key='',
     environment=env
     )
     vector_store = Pinecone.from_existing_index(index_name=index,embedding=embeddings)
@@ -89,7 +89,7 @@ def get_similar_docs(env,index,embeddings, prompt,document_count,unique_id):
 
 
 def get_llm_final_answer(docs,prompt):
-    llm = OpenAI(openai_api_key="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")
+    llm = OpenAI(openai_api_key="")
     chain = load_qa_chain(llm=llm,chain_type="stuff")
     with get_openai_callback() as cb:
         response = chain.run(input_documents = docs, question=prompt)
@@ -140,7 +140,7 @@ def extracted_data(pages_data):
         """
     prompt_template = PromptTemplate(input_variables=["pages"], template=template)
 
-    llm = OpenAI(openai_api_key='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', temperature=.7)
+    llm = OpenAI(openai_api_key='', temperature=.7)
     full_response=llm(prompt_template.format(pages=pages_data))
     
 
