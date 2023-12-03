@@ -7,11 +7,12 @@ from langchain.utilities.serpapi import SerpAPIWrapper
 from tools.tools import get_profile_url
 
 
-def lookup(name: str) -> str:
+def twitterlookup(name: str) -> str:
+    return "@gforguru1976"
     llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo-1106")
 
-    template = """Given the full name {name_of_person} I want you to get a link to their
-    LinkedIn profile page. Your answer should contain only a URL"""
+    template = """Given the full name {name_of_person} I want you to get a username of their
+    Twitter profile page. Your answer should contain only a person's Username"""
 
     prompt_template = PromptTemplate(
         input_variables=["name_of_person"], template=template
@@ -19,8 +20,8 @@ def lookup(name: str) -> str:
     tools_for_agent = [
         Tool(
             func=get_profile_url,
-            name="Crawl Google for LinkedIn Profile page",
-            description="Useful when you need to get LinkedIn Page URL",
+            name="Crawl Google for Twitter Profile page",
+            description="Useful when you need to get Twitter UserName",
         )
     ]
     agent = initialize_agent(
